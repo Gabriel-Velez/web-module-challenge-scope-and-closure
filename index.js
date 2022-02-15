@@ -52,6 +52,14 @@ function counter2() {
   return count++;
 }
 
+/*
+  1. the count variable lives in the function scope in counter1 while the count variable lives in the gobal scope for counter2
+ 
+  2. counter1 uses closure because everything is within the function scope 
+ 
+  3. counter1 would be better if you didnt want anything in the global scope effecting the count, counter2 would be better if the opposite were true
+*/
+
 
 /* ⚾️⚾️⚾️ Task 2: inning() ⚾️⚾️⚾️
 Use the inning function below to do the following:
@@ -62,10 +70,11 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+   return Math.floor(Math.random()*3)
 }
 
+//console.log(inning());
 
 /* ⚾️⚾️⚾️ Task 3: finalScore() ⚾️⚾️⚾️
 Use the finalScore function below to do the following:
@@ -81,17 +90,34 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+function finalScore(func, innings) {
+    const score = {
+        Home: 0,
+        Away: 0,
+    }
+    while (innings > 0) {
+        score.Home += func();
+        score.Away += func();
+        innings--;
+    }
+    return score;
 }
+
+//console.log(finalScore(inning, 9));
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
 Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(func) {
+    let homeScore = func();
+    let awayScore = func();
+    const score = {
+        Home: homeScore,
+        Away: awayScore,
+    }
+    return score;
 }
 
 
@@ -136,10 +162,25 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function scoreboard(scoreFunc, inningFunc, innings) {
+    const totalInnings = [];
+    let homeTotal = 0;
+    let awayTotal = 0;
+    while (innings > 0) {
+        let i = scoreFunc(inningFunc());
+        homeTotal += i.Home;
+        awayTotal += i.Away;
+        totalInnings.push(`Inning ${innings}: Away ${i.Away} - Home ${i.Home}`);
+        innings--;
+    }
+    if (homeTotal === awayTotal) {
+        totalInnings.push(`This game will require extra innings: Away ${awayTotal} - Home ${homeTotal}`)
+    } else {
+        totalInnings.push(`Final Score: Away ${awayTotal} - Home ${homeTotal}`)
+    };
 }
 
+//console.log(scoreboard(getInningScore, inning, 9));
 
 
 
