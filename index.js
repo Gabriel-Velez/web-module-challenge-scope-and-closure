@@ -167,7 +167,7 @@ function scoreboard(scoreFunc, inningFunc, innings) {
     let homeTotal = 0;
     let awayTotal = 0;
     while (innings > 0) {
-        let i = scoreFunc(inningFunc());
+        let i = scoreFunc(inningFunc);
         homeTotal += i.Home;
         awayTotal += i.Away;
         totalInnings.push(`Inning ${innings}: Away ${i.Away} - Home ${i.Home}`);
